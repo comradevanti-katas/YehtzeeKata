@@ -19,40 +19,43 @@ public static class YetzeeGame
         int[] FindPairs() => 
             dieValues.Where(HasPairOf).ToArray();
 
-        if (category == Category.Yahtzee)
-            if (HasAllSame())
+        switch (category)
+        {
+            case Category.Yahtzee when HasAllSame():
                 return 50;
-            else
+            case Category.Yahtzee:
                 return 0;
-
-        if (category == Category.Ones)
-            return CountOf(1);
-        if (category == Category.Twos)
-            return CountOf(2) * 2;
-        if (category == Category.Threes)
-            return CountOf(3) * 3;
-        if (category == Category.Fours)
-            return CountOf(4) * 4;
-        if (category == Category.Fives)
-            return CountOf(5) * 5;
-        if (category == Category.Sixes)
-            return CountOf(6) * 6;
-        if (category == Category.Pairs)
-        {
-            var pairs = FindPairs();
-            if (pairs.Length >= 1)
-                return pairs.Max() * 2;
-            return 0;
+            case Category.Ones:
+                return CountOf(1);
+            case Category.Twos:
+                return CountOf(2) * 2;
+            case Category.Threes:
+                return CountOf(3) * 3;
+            case Category.Fours:
+                return CountOf(4) * 4;
+            case Category.Fives:
+                return CountOf(5) * 5;
+            case Category.Sixes:
+                return CountOf(6) * 6;
+            case Category.Pairs:
+            {
+                var pairs = FindPairs();
+                if (pairs.Length >= 1)
+                    return pairs.Max() * 2;
+                return 0;
+            }
+            case Category.TwoPairs:
+            {
+                var pairs = FindPairs();
+                if (pairs.Length == 2)
+                    return pairs.Sum() * 2;
+                return 0;
+            }
+            case Category.Chance:
+                return die.Sum();
+            default:
+                throw new ArgumentException("Unknown category");
         }
-        if (category == Category.TwoPairs)
-        {
-            var pairs = FindPairs();
-            if (pairs.Length == 2)
-                return pairs.Sum() * 2;
-            return 0;
-        }
-        
-        return die.Sum();
     }
 }
 
