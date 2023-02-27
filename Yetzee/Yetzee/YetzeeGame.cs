@@ -8,7 +8,7 @@ public static class YetzeeGame
     {
         int CountOf(int num) =>
             die.Count(it => it == num);
-
+        
         bool HasPairOf(int pairNumber) =>
             CountOf(pairNumber) == 2;
 
@@ -23,10 +23,7 @@ public static class YetzeeGame
 
         int[] FindPairs() =>
             allDieValues.Where(HasPairOf).ToArray();
-
-        // 1 1 1 2 2
-        // 1 1 1 1 2
-        // 1 2 3 4 5
+        
         int? TryFindTriplet()
         {
             var triplets = allDieValues.Where(HasTripletsOf).ToArray();
@@ -87,6 +84,8 @@ public static class YetzeeGame
                 if (quad != null)
                     return quad.Value * 4;
                 return 0;
+            case Category.SmallStraight:
+                return die.Distinct().Sum() == 15 ? 15 : 0;
             default:
                 throw new ArgumentException("Unknown category");
         }
@@ -106,5 +105,6 @@ public enum Category
     Pairs,
     TwoPairs,
     ThreeOfAKind,
-    FourOfAKind
+    FourOfAKind,
+    SmallStraight
 }

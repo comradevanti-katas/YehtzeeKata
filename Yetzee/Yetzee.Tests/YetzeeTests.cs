@@ -173,4 +173,28 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.FourOfAKind);
         Assert.Equal(expected, actual);
     }
+
+    [Theory]
+    [InlineData("1,2,3,4,5")]
+    [InlineData("1,3,2,5,4")]
+    [InlineData("5,2,3,4,1")]
+    public void Small_Straight_Scores_15_For_Die_From_1_To_5(string dieString)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.SmallStraight);
+        Assert.Equal(15, actual);
+    }
+    
+    [Theory]
+    [InlineData("1,1,1,2,1")]
+    [InlineData("3,2,3,3,3")]
+    [InlineData("2,2,3,2,2")]
+    [InlineData("1,2,3,4,6")]
+    [InlineData("2,3,4,5,6")]
+    public void Small_Straight_Scores_0_For_Invalid_Combinations(string dieString)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.SmallStraight);
+        Assert.Equal(0, actual);
+    }
 }
