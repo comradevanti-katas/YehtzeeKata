@@ -2,6 +2,9 @@
 
 public static class YetzeeGame
 {
+
+    private static readonly int[] dieValues = {1, 2, 3, 4, 5, 6};
+    
     public static int Score(int[] die, Category category)
     {
         int CountOf(int num) =>
@@ -33,11 +36,7 @@ public static class YetzeeGame
             return CountOf(6) * 6;
         if (category == Category.Pairs)
         {
-            for (var i = 6; i >= 1; i--)
-                if (HasPairOf(i))
-                    return i * 2;
-
-            return 0;
+            return dieValues.Reverse().Where(HasPairOf).FirstOrDefault() * 2;
         }
 
         if (category == Category.TwoPairs)
