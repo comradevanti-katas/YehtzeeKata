@@ -112,7 +112,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.TwoPairs);
         Assert.Equal(0, actual);
     }
-    
+
     [Theory]
     [InlineData("1,1,2,3,3", 8)]
     [InlineData("1,2,2,3,3", 10)]
@@ -121,5 +121,29 @@ public class YetzeeTests
         var die = ParseDie(dieString);
         var actual = YetzeeGame.Score(die, Category.TwoPairs);
         Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void Three_Of_A_Kind_Scores_0_If_There_Are_4_Of_A_Kind()
+    {
+        var die = new[] {1, 1, 1, 1, 2};
+        var actual = YetzeeGame.Score(die, Category.ThreeOfAKind);
+        Assert.Equal(0, actual);
+    }
+
+    [Fact]
+    public void Three_Of_A_Kind_Scores_0_If_There_Is_No_Triplet()
+    {
+        var die = new[] {1, 1, 3, 2, 2};
+        var actual = YetzeeGame.Score(die, Category.ThreeOfAKind);
+        Assert.Equal(0, actual);
+    }
+
+    [Fact]
+    public void Three_Of_A_Kind_Scores_Sum_Of_Triplet()
+    {
+        var die = new[] {1, 1, 2, 2, 2};
+        var actual = YetzeeGame.Score(die, Category.ThreeOfAKind);
+        Assert.Equal(6, actual);
     }
 }

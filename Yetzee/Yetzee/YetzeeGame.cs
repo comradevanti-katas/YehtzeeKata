@@ -2,9 +2,8 @@
 
 public static class YetzeeGame
 {
+    private static readonly int[] allDieValues = {1, 2, 3, 4, 5, 6};
 
-    private static readonly int[] dieValues = {1, 2, 3, 4, 5, 6};
-    
     public static int Score(int[] die, Category category)
     {
         int CountOf(int num) =>
@@ -13,11 +12,26 @@ public static class YetzeeGame
         bool HasPairOf(int pairNumber) =>
             CountOf(pairNumber) == 2;
 
-        bool HasAllSame() => 
+        bool HasTripletsOf(int tripletNumber) =>
+            CountOf(tripletNumber) == 3;
+
+        bool HasAllSame() =>
             die.Distinct().Count() == 1;
 
-        int[] FindPairs() => 
-            dieValues.Where(HasPairOf).ToArray();
+        int[] FindPairs() =>
+            allDieValues.Where(HasPairOf).ToArray();
+
+        // 1 1 1 2 2
+        // 1 1 1 1 2
+        // 1 2 3 4 5
+        int? TryFindTriplet()
+        {
+            var triplets = allDieValues.Where(HasTripletsOf).ToArray();
+            if (triplets.Length > 0) return triplets[0];
+
+
+            return null;
+        }
 
         switch (category)
         {
@@ -53,6 +67,11 @@ public static class YetzeeGame
             }
             case Category.Chance:
                 return die.Sum();
+            case Category.ThreeOfAKind:
+                var triplet = TryFindTriplet();
+                if (triplet != null)
+                    return triplet.Value * 3;
+                return 0;
             default:
                 throw new ArgumentException("Unknown category");
         }
@@ -70,5 +89,6 @@ public enum Category
     Fives,
     Sixes,
     Pairs,
-    TwoPairs
+    TwoPairs,
+    ThreeOfAKind
 }
