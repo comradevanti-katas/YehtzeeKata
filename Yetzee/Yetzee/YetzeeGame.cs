@@ -9,9 +9,12 @@ public static class YetzeeGame
 
         bool HasPairOf(int pairNumber) =>
             CountOf(pairNumber) == 2;
-        
+
+        bool HasAllSame() => 
+            die.Distinct().Count() == 1;
+
         if (category == Category.Yahtzee)
-            if (die.Distinct().Count() == 1)
+            if (HasAllSame())
                 return 50;
             else
                 return 0;
