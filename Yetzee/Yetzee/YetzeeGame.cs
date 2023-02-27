@@ -88,6 +88,10 @@ public static class YetzeeGame
                 return die.Distinct().Sum() == 15 ? 15 : 0;
             case Category.LargeStraight:
                 return die.Distinct().Sum() == 20 ? 20 : 0;
+            case Category.FullHouse:
+                if (TryFindTriplet() != null && FindPairs().Length == 1)
+                    return die.Sum();
+                return 0;
             default:
                 throw new ArgumentException("Unknown category");
         }
@@ -109,5 +113,6 @@ public enum Category
     ThreeOfAKind,
     FourOfAKind,
     SmallStraight,
-    LargeStraight
+    LargeStraight,
+    FullHouse
 }

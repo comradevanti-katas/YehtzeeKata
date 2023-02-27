@@ -221,4 +221,15 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.LargeStraight);
         Assert.Equal(0, actual);
     }
+
+    [Theory]
+    [InlineData("1,1,2,2,2", 8)]
+    [InlineData("2,2,3,3,4", 0)]
+    [InlineData("4,4,4,4,4", 0)]
+    public void Full_House_Is_Scored_Correctly(string dieString, int expected)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.FullHouse);
+        Assert.Equal(expected, actual); 
+    }
 }
