@@ -184,7 +184,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.SmallStraight);
         Assert.Equal(15, actual);
     }
-    
+
     [Theory]
     [InlineData("1,1,1,2,1")]
     [InlineData("3,2,3,3,3")]
@@ -197,7 +197,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.SmallStraight);
         Assert.Equal(0, actual);
     }
-    
+
     [Theory]
     [InlineData("2,3,4,5,6")]
     [InlineData("6,3,2,5,4")]
@@ -208,7 +208,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.LargeStraight);
         Assert.Equal(20, actual);
     }
-    
+
     [Theory]
     [InlineData("1,1,1,2,1")]
     [InlineData("3,2,3,3,3")]
@@ -230,6 +230,6 @@ public class YetzeeTests
     {
         var die = ParseDie(dieString);
         var actual = YetzeeGame.Score(die, Category.FullHouse);
-        Assert.Equal(expected, actual); 
+        Assert.Equal(expected, actual);
     }
 }

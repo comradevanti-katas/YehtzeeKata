@@ -8,7 +8,7 @@ public static class YetzeeGame
     {
         int CountOf(int num) =>
             die.Count(it => it == num);
-        
+
         bool HasPairOf(int pairNumber) =>
             CountOf(pairNumber) == 2;
 
@@ -23,7 +23,7 @@ public static class YetzeeGame
 
         int[] FindPairs() =>
             allDieValues.Where(HasPairOf).ToArray();
-        
+
         int? TryFindTriplet()
         {
             var triplets = allDieValues.Where(HasTripletsOf).ToArray();
