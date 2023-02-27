@@ -1,16 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.InteropServices;
-
-namespace Yetzee;
+﻿namespace Yetzee;
 
 public class YetzeeTests
 {
+    private static int[] ParseDie(string s) => s.Split(",").Select(int.Parse).ToArray();
 
-    private static int[] ParseDie(string s)
-    {
-        return s.Split(",").Select(int.Parse).ToArray();
-    }
-    
     [Theory]
     [InlineData("1,1,3,3,6", 14)]
     [InlineData("4,5,5,6,1", 21)]
@@ -20,7 +13,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.Chance);
         Assert.Equal(expected, actual);
     }
-    
+
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
@@ -81,7 +74,7 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.Pairs);
         Assert.Equal(expected, actual);
     }
-    
+
     [Theory]
     [InlineData("2,2,2,3,4")]
     [InlineData("3,2,4,3,3")]
@@ -91,9 +84,9 @@ public class YetzeeTests
     {
         var die = ParseDie(dieString);
         var actual = YetzeeGame.Score(die, Category.Pairs);
-        Assert.Equal(0, actual);   
+        Assert.Equal(0, actual);
     }
-    
+
     [Theory]
     [InlineData("2,3,2,3,4", 6)]
     [InlineData("3,6,6,1,3", 12)]
@@ -101,9 +94,25 @@ public class YetzeeTests
     {
         var die = ParseDie(dieString);
         var actual = YetzeeGame.Score(die, Category.Pairs);
-        Assert.Equal(expected, actual);   
+        Assert.Equal(expected, actual);
     }
 
+    [Fact]
+    public void Two_Pairs_Scores_0_If_There_Is_Only_One_Pair()
+    {
+        var die = new[] {1, 2, 3, 4, 4};
+        var actual = YetzeeGame.Score(die, Category.TwoPairs);
+        Assert.Equal(0, actual);
+    }
+
+    [Fact]
+    public void More_Than_2_Numbers_Are_Not_A_Pair()
+    {
+        var die = new[] {2, 2, 4, 4, 4};
+        var actual = YetzeeGame.Score(die, Category.TwoPairs);
+        Assert.Equal(0, actual);
+    }
+    
     [Theory]
     [InlineData("1,1,2,3,3", 8)]
     [InlineData("1,2,2,3,3", 10)]
@@ -111,7 +120,6 @@ public class YetzeeTests
     {
         var die = ParseDie(dieString);
         var actual = YetzeeGame.Score(die, Category.TwoPairs);
-        Assert.Equal(expected, actual);   
+        Assert.Equal(expected, actual);
     }
-    
 }
