@@ -15,6 +15,9 @@ public static class YetzeeGame
         bool HasTripletsOf(int tripletNumber) =>
             CountOf(tripletNumber) == 3;
 
+        bool HasQuadrupletsOf(int quadNumber) =>
+            CountOf(quadNumber) == 4;
+
         bool HasAllSame() =>
             die.Distinct().Count() == 1;
 
@@ -30,6 +33,13 @@ public static class YetzeeGame
             if (triplets.Length > 0) return triplets[0];
 
 
+            return null;
+        }
+
+        int? TryFindQuadruplet()
+        {
+            var quad = allDieValues.Where(HasQuadrupletsOf).ToArray();
+            if (quad.Length > 0) return quad[0];
             return null;
         }
 
@@ -72,6 +82,11 @@ public static class YetzeeGame
                 if (triplet != null)
                     return triplet.Value * 3;
                 return 0;
+            case Category.FourOfAKind:
+                var quad = TryFindQuadruplet();
+                if (quad != null)
+                    return quad.Value * 4;
+                return 0;
             default:
                 throw new ArgumentException("Unknown category");
         }
@@ -90,5 +105,6 @@ public enum Category
     Sixes,
     Pairs,
     TwoPairs,
-    ThreeOfAKind
+    ThreeOfAKind,
+    FourOfAKind
 }

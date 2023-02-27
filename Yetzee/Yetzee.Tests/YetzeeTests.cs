@@ -146,4 +146,31 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.ThreeOfAKind);
         Assert.Equal(6, actual);
     }
+
+    [Fact]
+    public void Four_Of_A_Kind_Scores_0_If_There_Are_5_Of_A_Kind()
+    {
+        var die = new[] {1, 1, 1, 1, 1};
+        var actual = YetzeeGame.Score(die, Category.FourOfAKind);
+        Assert.Equal(0, actual);
+    }
+
+    [Fact]
+    public void Four_Of_A_Kind_Scores_0_If_There_Is_No_Quadruplet()
+    {
+        var die = new[] {1, 1, 1, 2, 3};
+        var actual = YetzeeGame.Score(die, Category.FourOfAKind);
+        Assert.Equal(0, actual);
+    }
+
+    [Theory]
+    [InlineData("1,1,1,2,1", 4)]
+    [InlineData("3,2,3,3,3", 12)]
+    [InlineData("2,2,3,2,2", 8)]
+    public void Four_Of_A_Kind_Scores_Sum_Of_Quadruplet(string dieString, int expected)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.FourOfAKind);
+        Assert.Equal(expected, actual);
+    }
 }
