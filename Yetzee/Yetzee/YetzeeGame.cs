@@ -16,6 +16,9 @@ public static class YetzeeGame
         bool HasAllSame() => 
             die.Distinct().Count() == 1;
 
+        int[] FindPairs() => 
+            dieValues.Where(HasPairOf).ToArray();
+
         if (category == Category.Yahtzee)
             if (HasAllSame())
                 return 50;
@@ -36,19 +39,19 @@ public static class YetzeeGame
             return CountOf(6) * 6;
         if (category == Category.Pairs)
         {
-            return dieValues.Reverse().Where(HasPairOf).FirstOrDefault() * 2;
+            var pairs = FindPairs();
+            if (pairs.Length >= 1)
+                return pairs.Max() * 2;
+            return 0;
         }
-
         if (category == Category.TwoPairs)
         {
-            
-            var pairs = die.Distinct().Where(HasPairOf).ToArray();
+            var pairs = FindPairs();
             if (pairs.Length == 2)
                 return pairs.Sum() * 2;
             return 0;
         }
-
-
+        
         return die.Sum();
     }
 }
