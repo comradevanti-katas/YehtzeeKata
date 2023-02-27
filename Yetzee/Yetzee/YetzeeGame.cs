@@ -2,13 +2,14 @@
 
 public static class YetzeeGame
 {
-    private static int Count(this IEnumerable<int> numbers, int num) =>
-        numbers.Count(it => it == num);
-
-    private static bool HasPairOf(this int[] die, int pairNumber) => die.Count(pairNumber) == 2;
-
     public static int Score(int[] die, Category category)
     {
+        int CountOf(int num) =>
+            die.Count(it => it == num);
+
+        bool HasPairOf(int pairNumber) =>
+            CountOf(pairNumber) == 2;
+        
         if (category == Category.Yahtzee)
             if (die.Distinct().Count() == 1)
                 return 50;
@@ -16,21 +17,21 @@ public static class YetzeeGame
                 return 0;
 
         if (category == Category.Ones)
-            return die.Count(1);
+            return CountOf(1);
         if (category == Category.Twos)
-            return die.Count(2) * 2;
+            return CountOf(2) * 2;
         if (category == Category.Threes)
-            return die.Count(3) * 3;
+            return CountOf(3) * 3;
         if (category == Category.Fours)
-            return die.Count(4) * 4;
+            return CountOf(4) * 4;
         if (category == Category.Fives)
-            return die.Count(5) * 5;
+            return CountOf(5) * 5;
         if (category == Category.Sixes)
-            return die.Count(6) * 6;
+            return CountOf(6) * 6;
         if (category == Category.Pairs)
         {
             for (var i = 6; i >= 1; i--)
-                if (die.HasPairOf(i))
+                if (HasPairOf(i))
                     return i * 2;
 
             return 0;
@@ -39,7 +40,7 @@ public static class YetzeeGame
         if (category == Category.TwoPairs)
         {
             
-            var pairs = die.Distinct().Where(die.HasPairOf).ToArray();
+            var pairs = die.Distinct().Where(HasPairOf).ToArray();
             if (pairs.Length == 2)
                 return pairs.Sum() * 2;
             return 0;
