@@ -86,6 +86,8 @@ public static class YetzeeGame
                 return 0;
             case Category.SmallStraight:
                 return die.Distinct().Sum() == 15 ? 15 : 0;
+            case Category.LargeStraight:
+                return die.Distinct().Sum() == 20 ? 20 : 0;
             default:
                 throw new ArgumentException("Unknown category");
         }
@@ -106,5 +108,6 @@ public enum Category
     TwoPairs,
     ThreeOfAKind,
     FourOfAKind,
-    SmallStraight
+    SmallStraight,
+    LargeStraight
 }

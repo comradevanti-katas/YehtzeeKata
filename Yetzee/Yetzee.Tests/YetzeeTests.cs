@@ -197,4 +197,28 @@ public class YetzeeTests
         var actual = YetzeeGame.Score(die, Category.SmallStraight);
         Assert.Equal(0, actual);
     }
+    
+    [Theory]
+    [InlineData("2,3,4,5,6")]
+    [InlineData("6,3,2,5,4")]
+    [InlineData("5,2,3,4,6")]
+    public void Large_Straight_Scores_20_For_Die_From_2_To_6(string dieString)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.LargeStraight);
+        Assert.Equal(20, actual);
+    }
+    
+    [Theory]
+    [InlineData("1,1,1,2,1")]
+    [InlineData("3,2,3,3,3")]
+    [InlineData("2,2,3,2,2")]
+    [InlineData("1,2,3,4,6")]
+    [InlineData("1,2,3,4,5")]
+    public void Large_Straight_Scores_0_For_Invalid_Combinations(string dieString)
+    {
+        var die = ParseDie(dieString);
+        var actual = YetzeeGame.Score(die, Category.LargeStraight);
+        Assert.Equal(0, actual);
+    }
 }
